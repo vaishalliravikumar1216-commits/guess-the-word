@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Daily Report</h1>
+<p>Date: <strong>{{ report_date }}</strong></p>
+
+<table>
+    <tr><th>Number of users</th><td id="users-count">{{ users }}</td></tr>
+    <tr><th>Number of correct guesses</th><td id="correct-count">{{ correct }}</td></tr>
+</table>
+
+<p><a href="{{ url_for('reports.dashboard') }}">Back to dashboard</a></p>
+{% endblock %}

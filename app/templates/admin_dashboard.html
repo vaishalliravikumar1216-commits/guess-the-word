@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Admin Dashboard</h1>
+
+<h2>Daily report</h2>
+<form method="GET" action="{{ url_for('reports.daily_report') }}">
+    <label for="date">Date</label>
+    <input type="date" id="date" name="date" value="{{ today }}" required>
+    <button type="submit">View Daily Report</button>
+</form>
+
+<h2>User report</h2>
+{% if players %}
+<form method="GET" action="{{ url_for('reports.user_report') }}">
+    <label for="user_id">Player</label>
+    <select id="user_id" name="user_id" required>
+        {% for p in players %}
+        <option value="{{ p.id }}">{{ p.username }}</option>
+        {% endfor %}
+    </select>
+    <button type="submit">View User Report</button>
+</form>
+{% else %}
+<p>No players have registered yet.</p>
+{% endif %}
+
+<p><a href="{{ url_for('auth.logout') }}">Logout</a></p>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>User Report</h1>
+<p>Player: <strong>{{ player.username }}</strong></p>
+
+{% if rows %}
+<table>
+    <tr><th>Date</th><th>Words tried</th><th>Correct guesses</th></tr>
+    {% for day, tried, correct in rows %}
+    <tr><td>{{ day }}</td><td>{{ tried }}</td><td>{{ correct }}</td></tr>
+    {% endfor %}
+</table>
+{% else %}
+<p>This player has not played any games yet.</p>
+{% endif %}
+
+<p><a href="{{ url_for('reports.dashboard') }}">Back to dashboard</a></p>
+{% endblock %}
