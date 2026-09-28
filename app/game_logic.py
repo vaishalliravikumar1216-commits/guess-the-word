@@ -2,6 +2,8 @@ GREEN = 'GREEN'
 ORANGE = 'ORANGE'
 GREY = 'GREY'
 WORD_LENGTH = 5
+MAX_GUESSES = 5
+MAX_GAMES_PER_DAY = 3
 
 
 def is_valid_guess(guess):
