@@ -20,7 +20,7 @@ def _players_only():
 
 def _get_own_game(game_id):
     """Fetch a game, making sure it belongs to the logged-in user."""
-    game = GameSession.query.get_or_404(game_id)
+    game = db.get_or_404(GameSession, game_id)
     if game.user_id != current_user.id:
         abort(403)
     return game
