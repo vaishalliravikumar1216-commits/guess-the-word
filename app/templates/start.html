@@ -1,7 +1,18 @@
 {% extends "base.html" %}
 {% block content %}
 <h1>Guess the Word</h1>
-<p>Words remaining today: <strong>{{ remaining }}</strong> of {{ max_games }}</p>
+<p class="muted">Guess the hidden 5-letter word in 5 tries.</p>
+
+<ul class="howto">
+    <li><span class="chip green"></span> Right letter, right position</li>
+    <li><span class="chip orange"></span> Right letter, wrong position</li>
+    <li><span class="chip grey"></span> Letter not in the word</li>
+</ul>
+
+<div class="stat-box">
+    <div class="stat-number">{{ remaining }} <span class="muted">of {{ max_games }}</span></div>
+    <div class="muted">words remaining today</div>
+</div>
 
 {% if remaining > 0 %}
 <form method="POST" action="{{ url_for('game.new_game') }}">
@@ -10,6 +21,4 @@
 {% else %}
 <p>You have played all your words for today. Come back tomorrow!</p>
 {% endif %}
-
-<p><a href="{{ url_for('auth.logout') }}">Logout</a></p>
 {% endblock %}

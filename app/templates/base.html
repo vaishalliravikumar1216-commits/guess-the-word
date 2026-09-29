@@ -1,22 +1,38 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Guess the Word</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
-    <div class="container">
+    <header class="site-header">
+        <div class="header-inner">
+            <a class="brand" href="{{ url_for('game.index') }}">Guess the Word</a>
+            {% if current_user.is_authenticated %}
+            <nav class="header-nav">
+                <span class="user-chip">{{ current_user.username }} &middot; {{ current_user.role|capitalize }}</span>
+                <a class="nav-link" href="{{ url_for('auth.logout') }}">Logout</a>
+            </nav>
+            {% endif %}
+        </div>
+    </header>
+
+    <main class="container">
         {% with messages = get_flashed_messages() %}
             {% if messages %}
-                <ul class="flashes">
+            <ul class="flashes">
                 {% for message in messages %}
-                    <li>{{ message }}</li>
+                <li>{{ message }}</li>
                 {% endfor %}
-                </ul>
+            </ul>
             {% endif %}
         {% endwith %}
 
         {% block content %}{% endblock %}
-    </div>
+    </main>
+
+    {% block scripts %}{% endblock %}
 </body>
 </html>

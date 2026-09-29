@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 {% block content %}
 <h1>Guess the Word</h1>
-<p>Guesses used: {{ game.guess_count }} of {{ max_guesses }}</p>
+<div class="game-meta">Guess {{ game.guess_count }} of {{ max_guesses }} used</div>
 
 <div class="board">
-    {# Rows for guesses already made, in the order they were guessed #}
+    {# Guesses already made, in the order they were guessed. The newest row flips in. #}
     {% for g in game.guesses %}
     {% set colours = g.result_pattern.split(',') %}
-    <div class="board-row">
+    <div class="board-row{% if loop.last %} reveal{% endif %}">
         {% for i in range(word_length) %}
         <div class="tile {{ colours[i]|lower }}">{{ g.guess_word[i] }}</div>
         {% endfor %}
@@ -18,17 +18,18 @@
     {% for _ in range(max_guesses - (game.guesses|length)) %}
     <div class="board-row">
         {% for i in range(word_length) %}
-        <div class="tile empty"></div>
+        <div class="tile"></div>
         {% endfor %}
     </div>
     {% endfor %}
 </div>
 
 {% if game.status == 'in_progress' %}
-<form method="POST" action="{{ url_for('game.guess', game_id=game.id) }}">
-    <input type="text" name="guess" maxlength="5" minlength="5" pattern="[A-Z]{5}"
-           title="Exactly 5 letters, upper case only" autocomplete="off" autofocus required>
-    <button type="submit">Submit Guess</button>
+<form class="guess-form" method="POST" action="{{ url_for('game.guess', game_id=game.id) }}">
+    <input type="text" id="guess-input" name="guess" maxlength="5" minlength="5"
+           pattern="[A-Z]{5}" title="Exactly 5 letters, upper case only"
+           autocomplete="off" autofocus required>
+    <button type="submit">Submit</button>
 </form>
 {% else %}
 <div class="modal-overlay">
@@ -38,9 +39,14 @@
         <p>You guessed the word.</p>
         {% else %}
         <h2>Better luck next time</h2>
+        <p>You have used all {{ max_guesses }} guesses.</p>
         {% endif %}
-        <a class="button" href="{{ url_for('game.start') }}">OK</a>
+        <a class="btn" href="{{ url_for('game.start') }}">OK</a>
     </div>
 </div>
 {% endif %}
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/game.js') }}"></script>
 {% endblock %}

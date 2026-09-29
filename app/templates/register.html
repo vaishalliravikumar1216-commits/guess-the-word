@@ -1,14 +1,17 @@
 {% extends "base.html" %}
 {% block content %}
-<h1>Register</h1>
+<h1>Create an account</h1>
+<p class="muted">Register as a player to start guessing words.</p>
 <form method="POST">
-    <label>Username:</label>
-    <input type="text" name="username" required>
-    <br>
-    <label>Password:</label>
-    <input type="password" name="password" required>
-    <br>
+    <label for="username">Username</label>
+    <input type="text" id="username" name="username" autocomplete="username" required>
+    <p class="hint">At least 5 letters, with both upper and lower case.</p>
+
+    <label for="password">Password</label>
+    <input type="password" id="password" name="password" autocomplete="new-password" required>
+    <p class="hint">At least 5 characters, with a letter, a number, and one of $ % *</p>
+
     <button type="submit">Register</button>
 </form>
-<p>Already have an account? <a href="{{ url_for('auth.login') }}">Login</a></p>
+<p style="margin-top: 20px;">Already have an account? <a href="{{ url_for('auth.login') }}">Login</a></p>
 {% endblock %}

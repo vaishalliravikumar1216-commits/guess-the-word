@@ -85,3 +85,8 @@ def test_login_redirects_by_role(app):
 
     player_resp = app.test_client().post('/login', data={'username': 'Player', 'password': 'Play1$'})
     assert player_resp.headers['Location'].endswith('/play')
+
+def test_home_redirects_admin_to_dashboard(app):
+    resp = _admin_client(app).get('/')
+    assert resp.status_code == 302
+    assert resp.headers['Location'].endswith('/admin')

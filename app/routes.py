@@ -41,6 +41,8 @@ def _games_started_today():
 @game_bp.route('/')
 def index():
     if current_user.is_authenticated:
+        if current_user.is_admin():
+            return redirect(url_for('reports.dashboard'))
         return redirect(url_for('game.start'))
     return redirect(url_for('auth.login'))
 
